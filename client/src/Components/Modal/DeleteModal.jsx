@@ -17,7 +17,7 @@ export const DeleteModal = ({ onClose, onDelete }) => {
           <b>This action cannot be undone.</b>
         </p>
 
-        <div className="flex justify-between mt-1">
+        <div className="flex justify-between flex-col gap-2 mt-1">
           <button
             onClick={onDelete}
             className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-300"

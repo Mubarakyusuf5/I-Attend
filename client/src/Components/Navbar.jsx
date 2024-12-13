@@ -1,3 +1,5 @@
+import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -13,9 +15,12 @@ export const Navbar = () => {
       {/* Website Name */}
       <h1 className="text-customGray text-2xl font-bold">
         <Link to="/lecturer" className="hover:text-gray-500">
-          Attendance Manager
+          Attendee
         </Link>
       </h1>
+
+      {/* toggle button */}
+      <FontAwesomeIcon icon={faBars} size='xl' className='md:hidden p-1 bg-gray-300 rounded bg-opacity-40' />
 
       {/* Links */}
       <div className="items-center space-x-6 hidden md:flex">

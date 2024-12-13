@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const {
   displayStudent,
+  displayStudentById,
   updateStudent,
   deleteStudent,
 } = require("../controllers/userController");
@@ -17,6 +18,9 @@ router.delete("/deleteStudent/:id",
 router.get("/displayStudent", 
   // VerifyToken, authorizeRoles("admin"), 
   displayStudent);
+router.get("/displayStudentById/:id", 
+  // VerifyToken, authorizeRoles("admin"), 
+  displayStudentById);
 
 
 module.exports = router;

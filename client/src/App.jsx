@@ -11,6 +11,10 @@ import { GenerateTokenPage } from './Pages/Lecturer/GenerateTokenPage'
 import { AddStudentModal } from './Components/Modal/AddStudentModal'
 import { DeleteModal } from './Components/Modal/DeleteModal'
 import { ViewModal } from './Components/Modal/ViewModal'
+import axios from 'axios';
+import { Attendance } from './Pages/Lecturer/Attendance'
+axios.defaults.baseURL = 'http://localhost:3500';
+axios.defaults.withCredentials = true;
 
 export const App = () => {
   return (
@@ -24,6 +28,7 @@ export const App = () => {
       <Route path='/lecturer' element={<LecturerPage />} />
       <Route path='/lecturer/displayStudent' element={<DisplayStudent />} />
       <Route path='/lecturer/generateToken' element={<GenerateTokenPage />} /> 
+      <Route path='/lecturer/attendance' element={<Attendance />} />
       {/* <Route path='/addmodal' element={<AddStudentModal />} /> */}
 
       <Route path='/student' element={<StudentPage />} />

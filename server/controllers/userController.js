@@ -1,4 +1,4 @@
-const Students = require("../models/StudentModel");
+const Students = require("../models/userModel.js");
 const {
   hashPassword,
 } = require("../middlewares/hash.js");
@@ -11,6 +11,16 @@ const displayStudent = async (req, res) => {
       res.status(500).json({ message: "Error fetching Students" });
     }
   };
+
+  const displayStudentById = async (req, res) => {
+    try {
+        const Student = await Students.findById(req.params.id);
+        res.status(200).json(Student);
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching Student by ID" });
+        console.log(error);
+    }
+};
 
 
   const updateStudent = async (req, res) => {
@@ -52,7 +62,7 @@ const deleteStudent = async (req, res)=>{
 
   module.exports = {
     displayStudent,
-    // displayStudentById,
+    displayStudentById,
     updateStudent,
     deleteStudent,
   };

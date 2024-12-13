@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
 
@@ -6,7 +7,7 @@ export const UpdateStudentModal = ({ onClose, student }) => {
     const [cPassword, setCPassword] = useState("")
   const [formData, setFormData] = useState({
     fullname: student?.fullname || "",
-    regNumber: student?.regNumber || '',
+    regnum: student?.regnum || '',
     email: student?.email || "",
     // role: student?.role || "",
     password: student?.password || "",
@@ -19,10 +20,10 @@ export const UpdateStudentModal = ({ onClose, student }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { fullname, regNumber, email, password} = formData;
+    const { fullname, regnum, email, password} = formData;
 
     // Simple validation
-    if (!fullname || !regNumber || !email || !password) {
+    if (!fullname || !regnum || !email || !password) {
       toast.error('All fields are required!');
       return;
     }
@@ -67,14 +68,14 @@ export const UpdateStudentModal = ({ onClose, student }) => {
           </div>
 
           <div className="mb-2">
-            <label className="block text-gray-700 mb-1" htmlFor="regNumber">
+            <label className="block text-gray-700 mb-1" htmlFor="regnum">
               Registration Number
             </label>
             <input
               type="text"
-              id="regNumber"
-              name="regNumber"
-              value={formData.regNumber}
+              id="regnum"
+              name="regnum"
+              value={formData.regnum}
               onChange={handleChange}
               className="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-customGreen"
               placeholder="Enter registration number"

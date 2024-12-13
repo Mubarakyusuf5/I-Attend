@@ -6,13 +6,13 @@ export const Head = ({ Click, Title, btnName, Input, val }) => {
   return (
     <>
       <div className="mt-8">
-        <div className="bg-customGreen flex items-center rounded-t-md justify-between p-4">
-          <h3 className="text-white text-lg font-bold">{Title}</h3>
+        <div className="bg-customGreen flex items-start gap-2 md:items-center rounded-t-md flex-col md:flex-row md:justify-between p-4">
+          <h3 className="text-white text-xl font-bold">{Title}</h3>
 
-          <div className="flex gap-5 items-center">
+          <div className="flex gap-2 md:gap-5 flex-col md:flex-row md:items-center">
             <button
               onClick={Click}
-              className="py-2 px-4 bg-green-600 text-white text-sm font-semibold rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-customOrange transition-all duration-300 cursor-pointer"
+              className="button py-2 px-4 bg-green-600 text-white text-sm font-semibold rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-customOrange transition-all duration-300 cursor-pointer"
             >
               {` + Add ${btnName}`}
             </button>

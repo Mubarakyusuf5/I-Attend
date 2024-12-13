@@ -24,7 +24,7 @@ export const DisplayStudent = () => {
   const fetchStudents = async () => {
     setLoading(true);
     try {
-      const response = await axios.get("/api/admin/displayStudent");
+      const response = await axios.get("/api/lecturer/displayStudent");
       const modifiedStudents = response.data.map((student, index) => ({
         ...student,
         customId: index + 1, // Generate a custom ID for display
@@ -69,18 +69,31 @@ export const DisplayStudent = () => {
   // Delete student with confirmation
   const handleDeleteBtn = async (id) => {
     try {
-      const { data } = await axios.delete(`/api/admin/deleteStudent/${id}`);
-      setStudents(students.filter((student) => student._id !== id));
-      setFilteredStudents(
-        filteredStudents.filter((student) => student._id !== id)
-      );
+      // Fetch the user data first to check the role
+      // const { data: userData } = await axios.get(`/api/lecturer/displayStudentById/${id}`);
+      
+      // // Check if the role is Lecturer
+      // if (userData.role === "Lecturer") {
+      //   toast.error("You cannot delete yourself!");
+      //   return; // Exit the function if the user is a Lecturer
+      // }
+      
+      // Proceed with deletion if the role is not Lecturer
+      const { data: deleteResponse } = await axios.delete(`/api/lecturer/deleteStudent/${id}`);
+      
+      // Update state to remove the deleted student
+      setStudents((prev) => prev.filter((student) => student._id !== id));
+      setFilteredStudents((prev) => prev.filter((student) => student._id !== id));
       setShowDeleteModal(false);
-      toast.success(data.message);
+  
+      // Show success message
+      toast.success(deleteResponse.message);
     } catch (error) {
       console.error("Error deleting student:", error);
       toast.error("Error deleting student. Please try again.");
     }
   };
+  
 
   // Search and filter students
   const handleSearchFilter = (e) => {
@@ -104,7 +117,7 @@ export const DisplayStudent = () => {
     },
     {
       name: "Reg Number",
-      selector: (row) => row.username,
+      selector: (row) => row.regnum,
       sortable: true,
     },
     {
@@ -112,16 +125,16 @@ export const DisplayStudent = () => {
       selector: (row) => row.email,
       sortable: true,
     },
-    {
-      name: "Present",
-      selector: (row) => row.present,
-      sortable: true,
-    },
-    {
-      name: "Absent",
-      selector: (row) => row.absent,
-      sortable: true,
-    },
+    // {
+    //   name: "Present",
+    //   selector: (row) => row.present,
+    //   sortable: true,
+    // },
+    // {
+    //   name: "Absent",
+    //   selector: (row) => row.absent,
+    //   sortable: true,
+    // },
     {
       name: "Action",
       cell: (row) => (
@@ -148,7 +161,7 @@ export const DisplayStudent = () => {
       Input={handleSearchFilter}
       val={search}
     />
-    <div className="table bg-white p-0 px-5 pb-2.5 shadow-md rounded-b-lg w-full">
+    <div className="bg-white p-0 px-5 pb-2.5 shadow-md rounded-b-lg w-full">
       <DataTable
         columns={columns}
         data={filteredStudents.length ? filteredStudents : students}

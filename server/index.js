@@ -17,8 +17,8 @@ app.use(express.json());           // For parsing JSON
 app.options("*", cors(corsOptions));  // Preflight request handler
 
 // Your routes
-// app.use("/auth", require("./Routes/authRoutes.js"));
-// app.use("/api/lecturer", require("./Routes/adminPageRoute.js"));
+app.use("/auth", require("./Routes/authRoutes.js"));
+app.use("/api/lecturer", require("./Routes/adminPageRoute.js"));
 // app.use("/api/student", require("./Routes/userPageRoute.js"));
 
 const port = process.env.PORT || 3455;

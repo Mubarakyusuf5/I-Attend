@@ -1,12 +1,9 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 export const LecturerPage = () => {
-  const dummyStudentData = [
-    { id: 1, name: 'John Doe', course: 'Math 101' },
-    { id: 2, name: 'Jane Smith', course: 'History 102' },
-    { id: 3, name: 'Sam Brown', course: 'Physics 103' },
-  ];
+  const [student, setStudent] = useState(0)
 
   const getGreeting = () => {
     const currentHour = new Date().getHours();
@@ -17,6 +14,19 @@ export const LecturerPage = () => {
 
   const lecturerName = 'John';
 
+  const fetchStudents = async()=>{
+    try {
+      const response = await axios.get("/api/lecturer/displayStudent")
+      setStudent(response.data)
+    } catch (error) {
+      
+    }
+  }
+
+  useEffect(()=>{
+    fetchStudents()
+  },[])
+
   return (
     <div className="bg-customGray min-h-screen py-4 px-8">
       {/* Greeting Section */}
@@ -26,7 +36,7 @@ export const LecturerPage = () => {
         {getGreeting()}, {lecturerName}!
       </div>
       <div className="flex justify-center pt-10">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 max-w-5xl">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl">
           {/* Card 1: Display Students */}
           <Link
             to="/lecturer/displayStudent"
@@ -46,11 +56,22 @@ export const LecturerPage = () => {
           </Link>
 
           {/* Card 3: View Students */}
-          <div className="bg-white shadow-md rounded-lg p-4  hover:shadow-lg hover:scale-105 transition-all duration-300 min-h-28 w-56 mx-auto">
+          <Link
+            to="/lecturer/attendance"
+            className="bg-white shadow-md rounded-lg p-4  hover:shadow-lg hover:scale-105 transition-all duration-300 h-28 w-56 mx-auto"
+          >
+            <h2 className="text-customGreen text-lg font-semibold mb-2">View Attendance</h2>
+            <p className="text-gray-600 mb-4 text-sm">Verify the attendance taken.</p>
+          </Link>
+
+          {/* Card 4: View Students */}
+          <div className="bg-white flex items-center gap-2 shadow-md rounded-lg p-4  hover:shadow-lg hover:scale-105 transition-all duration-300 min-h-28 w-56 mx-auto">
+            <div>
             <h2 className="text-customGreen text-lg font-semibold mb-2">Students Registered</h2>
             <p className="text-gray-600 mb-4 text-sm">List of available students</p>
-            <div className="bg-customGray text-center p-2 rounded-lg">
-                {dummyStudentData.length}
+            </div>
+            <div className="bg-customGreen text-white text-lg font-semibold text-center p-2 rounded-lg">
+                {student.length}
               
             </div>
           </div>
