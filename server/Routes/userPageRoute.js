@@ -11,19 +11,19 @@ const {
   const authorizeRoles = require("../middlewares/RoleMiddleware.js");
 
   router.post("/createSale",
-     VerifyToken, authorizeRoles("admin", "user"),
+    //  VerifyToken, authorizeRoles("Lecturer", "Student"),
       createSale);
   router.put("/updateSale/:id", 
-    VerifyToken, authorizeRoles("admin", "user"), 
+    // VerifyToken, authorizeRoles("Lecturer", "Student"), 
     updateSale);
   router.delete("/deleteSale/:id", 
-    VerifyToken, authorizeRoles("admin", "user"), 
+    // VerifyToken, authorizeRoles("Lecturer", "Student"), 
     deleteSale);
   router.get("/displaySale", 
-    VerifyToken, authorizeRoles("admin", "user"), 
+    // VerifyToken, authorizeRoles("Lecturer", "Student"), 
     displaySale);
   router.get("/displaySale/:id", 
-    VerifyToken, authorizeRoles("admin", "user"), 
+    // VerifyToken, authorizeRoles("Lecturer", "Student"), 
     displaySaleById);
   
   

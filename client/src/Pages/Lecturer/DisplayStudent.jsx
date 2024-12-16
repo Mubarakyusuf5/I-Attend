@@ -70,13 +70,13 @@ export const DisplayStudent = () => {
   const handleDeleteBtn = async (id) => {
     try {
       // Fetch the user data first to check the role
-      // const { data: userData } = await axios.get(`/api/lecturer/displayStudentById/${id}`);
+      const { data: userData } = await axios.get(`/api/lecturer/displayStudentById/${id}`);
       
-      // // Check if the role is Lecturer
-      // if (userData.role === "Lecturer") {
-      //   toast.error("You cannot delete yourself!");
-      //   return; // Exit the function if the user is a Lecturer
-      // }
+      // Check if the role is Lecturer
+      if (userData.role === "Lecturer") {
+        toast.error("You cannot delete yourself!");
+        return; // Exit the function if the user is a Lecturer
+      }
       
       // Proceed with deletion if the role is not Lecturer
       const { data: deleteResponse } = await axios.delete(`/api/lecturer/deleteStudent/${id}`);
@@ -151,7 +151,7 @@ export const DisplayStudent = () => {
   ];
 
   return (
-    <div className="bg-customGray py-4 min-h-screen">
+    <div className="bg-customGray py-4 min-h-screen head">
       <div className="px-6 bg-customGray">
   <div className="body mt-8 ">
     <Head
@@ -173,6 +173,7 @@ export const DisplayStudent = () => {
       />
     </div>
   </div>
+  <div className="h-96"></div>
 </div>
 
       {/* modals */}

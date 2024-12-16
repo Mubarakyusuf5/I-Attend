@@ -1,9 +1,11 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../Context/AuthContext';
 
 export const LecturerPage = () => {
   const [student, setStudent] = useState(0)
+  const { user } = useAuth()
 
   const getGreeting = () => {
     const currentHour = new Date().getHours();
@@ -12,16 +14,23 @@ export const LecturerPage = () => {
     return 'Good Evening';
   };
 
-  const lecturerName = 'John';
+  const firstName = user.fullname.split(" ")[0];
 
-  const fetchStudents = async()=>{
+
+  const fetchStudents = async () => {
     try {
-      const response = await axios.get("/api/lecturer/displayStudent")
-      setStudent(response.data)
-    } catch (error) {
+      const response = await axios.get("/api/lecturer/displayStudent");
       
+      // Filter the students based on role
+      const students = response.data.filter(user => user.role === "Student");
+  
+      // Set the filtered students
+      setStudent(students);
+    } catch (error) {
+      console.error("Error fetching students:", error);
     }
-  }
+  };
+  
 
   useEffect(()=>{
     fetchStudents()
@@ -33,10 +42,10 @@ export const LecturerPage = () => {
 
       {/* Main Content */}
       <div className=" text-customGreen text-lg md:text-xl font-semibold">
-        {getGreeting()}, {lecturerName}!
+        {getGreeting()}, {firstName || "Guest"}!
       </div>
       <div className="flex justify-center pt-10">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl">
+        <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6 max-w-5xl">
           {/* Card 1: Display Students */}
           <Link
             to="/lecturer/displayStudent"

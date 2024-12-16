@@ -2,7 +2,7 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 
-export const Head = ({ Click, Title, btnName, Input, val }) => {
+export const Head = ({ Click, Click1, Title, btnName, btnName1, Input, val }) => {
   return (
     <>
       <div className="mt-8">
@@ -15,6 +15,12 @@ export const Head = ({ Click, Title, btnName, Input, val }) => {
               className="button py-2 px-4 bg-green-600 text-white text-sm font-semibold rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-customOrange transition-all duration-300 cursor-pointer"
             >
               {` + Add ${btnName}`}
+            </button>
+            <button
+              onClick={Click1}
+              className="filter py-2 px-4 bg-green-600 text-white text-sm font-semibold rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-customOrange transition-all duration-300 cursor-pointer"
+            >
+              {`${btnName1}`}
             </button>
             <div className="border border-gray-300 rounded-lg overflow-hidden bg-white pr-2">
               <input

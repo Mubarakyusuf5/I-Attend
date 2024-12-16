@@ -6,21 +6,42 @@ const {
   updateStudent,
   deleteStudent,
 } = require("../controllers/userController");
+const { GenerateToken, displayTodaysToken, markAttendance, displayTodaysAttendance, displayAttendance } = require("../controllers/tokenController.js")
 const { VerifyToken } = require("../middlewares/jwt.js");
 const authorizeRoles = require("../middlewares/RoleMiddleware.js");
 
 router.put("/updateStudent/:id", 
-  // VerifyToken, authorizeRoles("admin"), 
+  VerifyToken, authorizeRoles("Lecturer"), 
   updateStudent);
 router.delete("/deleteStudent/:id", 
-  // VerifyToken, authorizeRoles("admin"), 
+  VerifyToken, authorizeRoles("Lecturer"), 
   deleteStudent);
 router.get("/displayStudent", 
-  // VerifyToken, authorizeRoles("admin"), 
+  VerifyToken, authorizeRoles("Lecturer"), 
   displayStudent);
 router.get("/displayStudentById/:id", 
-  // VerifyToken, authorizeRoles("admin"), 
+  VerifyToken, authorizeRoles("Lecturer"), 
   displayStudentById);
+  
+router.post("/generateToken",
+   VerifyToken, authorizeRoles("Lecturer"), 
+   GenerateToken)
+   router.get('/getTodaysToken', 
+    VerifyToken, authorizeRoles("Lecturer"), 
+    displayTodaysToken
+  )
+  router.post('/markAttendance', 
+    VerifyToken, authorizeRoles("Student"), 
+  markAttendance
+)
+  router.post('/displayAttendance', 
+    VerifyToken, authorizeRoles("Lecturer", "Student"), 
+  displayAttendance
+)
+  router.get('/todaysAttendance', 
+    VerifyToken, authorizeRoles("Lecturer", "Student"), 
+  displayTodaysAttendance
+)
 
 
 module.exports = router;

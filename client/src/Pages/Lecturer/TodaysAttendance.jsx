@@ -3,10 +3,10 @@ import { Head } from '../../Components/Head';
 import DataTable from 'react-data-table-component';
 import axios from 'axios';
 import { toast } from "react-hot-toast";
+import "./style.css"
 import { useNavigate } from "react-router-dom";
-// import "./style.css"
 
-export const Attendance = () => {
+export const TodaysAttendance = () => {
     const [students, setStudents] = useState([]);
     const [filteredStudents, setFilteredStudents] = useState([]);
     const [search, setSearch] = useState("");
@@ -46,9 +46,8 @@ export const Attendance = () => {
 
       const navigate = useNavigate()
       const nextPage =()=>{
-        navigate("/lecturer/attendance/today")
+        navigate("/lecturer/attendance")
       }
-
     
       const columns = [
         {
@@ -67,7 +66,7 @@ export const Attendance = () => {
           sortable: true,
         },
         {
-          name: "Time's Present",
+          name: "Status",
           selector: (row) => row.attendance[0].status,
           sortable: true,
         },
@@ -80,8 +79,8 @@ export const Attendance = () => {
         <div className="body mt-8 ">
           <Head
             Click1={nextPage}
-            Title="Attendance"
-            btnName1="Filter Today's Attendance"
+            Title="Today's Attendance"
+            btnName1="Filter All Attendance"
             Input={handleSearchFilter}
             val={search}
           />

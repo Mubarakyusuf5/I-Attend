@@ -1,9 +1,5 @@
 const mongoose = require("mongoose")
 
-// const attendanceSchema = mongoose.Schema({
-//     date: { type: Date, required: true },
-//     status: { type: String, enum: ['Present', 'Absent'], default:"null", required: true },
-// });
 
 const UserSchema =  mongoose.Schema(
     {
@@ -31,7 +27,6 @@ const UserSchema =  mongoose.Schema(
             enum: ['Lecturer', 'Student'],
             default: "Student"
         },
-        // attendance: [attendanceSchema]
 
     },
     {

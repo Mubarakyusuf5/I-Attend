@@ -1,13 +1,27 @@
 // Import dependencies
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast} from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../Context/AuthContext';
+import axios from 'axios';
 
 export const Login = () => {
   const [formData, setFormData] = useState({
     regnum: '',
     password: '',
   });
-  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const { login, user } = useAuth();
+  const [User, setUser] = useState(null)
+
+  useEffect(() => {
+    // Parse user data from localStorage
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
 
   // Handle form input changes
   const handleChange = (e) => {
@@ -16,19 +30,43 @@ export const Login = () => {
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Simple validation
     if (!formData.regnum || !formData.password) {
-    //   setError('All fields are required.');/
       toast.error('All fields are required.');
-    } else {
-      setError('');
-      toast.success('Login successful!');
-      console.log('Login successful!', formData);
-    }
+      setLoading(false);
+    } 
+
+    try {
+      const response = await axios.post("/auth/login", formData);
+      login(response.data.user); // Update the user context
+      
+      const { role } = response.data.user; // Access role inside user object
+      const message = response.data.message;
+
+      // Use a separate function to handle redirection
+      redirectUser(role);
+      
+      toast.success(message || "Login successful");
+    } catch (error) {
+      toast.error(error.response?.data?.message);
+      setLoading(false); // Stop loading regardless of success or error
+    } 
   };
+
+    // Function to handle user redirection
+    const redirectUser = (role) => {
+      if (user) {
+        navigate(role === 'Lecturer' ? '/Lecturer/dashboard' : '/Student');
+      }
+    };
+  
+    useEffect(() => {
+      if (user) {
+        // Redirect if user is already logged in
+        redirectUser(user.role);
+      }
+    }, [user, navigate]);
 
   return (
     <div className="bg-customGray min-h-screen flex items-center justify-center p-4">
@@ -62,13 +100,15 @@ export const Login = () => {
               onChange={handleChange}
               className="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-customGreen"
               placeholder="Enter your password"
+              autoComplete='off'
             />
           </div>
           <button
             type="submit"
             className="w-full bg-customGreen text-white py-2 px-4 rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-customOrange"
+            disabled={loading}
           >
-            Login
+            {loading ? "Logging" : "Login"}
           </button>
         </form>
         {/* <p className="text-sm text-gray-600 mt-4 text-center">

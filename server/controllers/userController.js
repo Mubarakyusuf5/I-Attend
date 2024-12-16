@@ -27,11 +27,6 @@ const displayStudent = async (req, res) => {
     try {
       const { fullname, regnum, email, password } = req.body;
   
-      // Validate fields
-      // if (!fullname || !regnum || !email || !password) {
-      //   return res.status(400).json({ message: "All fields are required" });
-      // }
-  
       // Hash password before updating if it's provided
       const updatedData = { fullname, regnum, email };
       if (password) {

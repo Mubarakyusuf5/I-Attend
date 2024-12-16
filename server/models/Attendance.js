@@ -2,15 +2,10 @@ const mongoose = require("mongoose");
 
 const attendanceSchema = mongoose.Schema(
   {
-    token:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Token",
-        required: true
-    },
     student: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: true,
+      // required: true,
     },
     attendance: [
       {
@@ -18,9 +13,9 @@ const attendanceSchema = mongoose.Schema(
         status: {
           type: String,
           enum: ["Present", "Absent"],
-        //   default: "null",
           required: true,
         },
+        token: { type: mongoose.Schema.Types.ObjectId, ref: "Token" }
       },
     ],
   },
