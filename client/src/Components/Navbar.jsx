@@ -63,7 +63,7 @@ export const Navbar = () => {
           Home
         </Link>
         <Link
-          to="/generate-token"
+          to="/lecturer/generateToken"
           className={
             user?.role === "Student"
               ? "hidden"
@@ -71,6 +71,16 @@ export const Navbar = () => {
           }
         >
           Generate Token
+        </Link>
+        <Link
+          to="/lecturer/attendance"
+          className={
+            user?.role === "Student"
+              ? "hidden"
+              : "text-customGray hover:underline hover:text-gray-500 text-lg"
+          }
+        >
+          View Attendance
         </Link>
         <button
           className="py-2 px-4 bg-red-500 hover:bg-red-600 rounded-md"
