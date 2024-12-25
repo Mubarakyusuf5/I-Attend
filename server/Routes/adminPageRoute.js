@@ -34,12 +34,12 @@ router.post("/generateToken",
     VerifyToken, authorizeRoles("Student"), 
   markAttendance
 )
-  router.post('/displayAttendance', 
-    VerifyToken, authorizeRoles("Lecturer", "Student"), 
+  router.get('/displayAttendance', 
+    VerifyToken, authorizeRoles("Lecturer"), 
   displayAttendance
 )
   router.get('/todaysAttendance', 
-    VerifyToken, authorizeRoles("Lecturer", "Student"), 
+    VerifyToken, authorizeRoles("Lecturer"), 
   displayTodaysAttendance
 )
 

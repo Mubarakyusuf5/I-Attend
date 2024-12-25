@@ -5,3 +5,41 @@
 .head .filter{
   display: none;
 }
+
+.rdt_TableCell .actBtn{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.rdt_TableCell button {
+  border-radius: 50%;
+  border: 0;
+  height: 30px;
+  width: 30px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: 0.3s;
+}
+
+.rdt_TableCell button:nth-child(1) {
+  background-color: dodgerblue;
+  color: #fff;
+}
+ .rdt_TableCell button:nth-child(1):hover {
+  background-color:rgb(24, 96, 168);
+}
+.rdt_TableCell button:nth-child(2) {
+  background-color: rgb(228, 80, 54);
+  color: #fff;
+}
+.rdt_TableCell button:nth-child(2):hover {
+  background-color: rgb(190, 50, 26);
+}
+
+@media screen and (max-width:425px){
+  .body .rdt_TableCell:nth-child(2){
+    width: 250px;
+  }
+}
+

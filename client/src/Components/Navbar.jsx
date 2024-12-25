@@ -147,6 +147,19 @@ export const Navbar = () => {
                   Generate Token
                 </NavLink>
               </li>
+              <li>
+                <NavLink
+                  to="/lecturer/attendance"
+                  className={({ isActive }) =>
+                    `${
+                      isActive ? "bg-gray-100" : ""
+                    } border-b w-full block hover:bg-gray-100 rounded-md py-2 px-3`
+                  }
+                  onClick={()=> setOpen(false)}
+                >
+                 View  Attendance
+                </NavLink>
+              </li>
             </ul>
           </div>
             <button

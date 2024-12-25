@@ -64,13 +64,7 @@ export const TodaysAttendance = () => {
           name: "Reg Number",
           selector: (row) => row.student.regnum,
           sortable: true,
-        },
-        {
-          name: "Status",
-          selector: (row) => row.attendance[0].status,
-          sortable: true,
-        },
-        
+        },        
       ];
 
   return (

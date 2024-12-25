@@ -71,7 +71,7 @@ const markAttendance = async (req, res) => {
     // Find the token in the database
     const token = await Token.findOne({ token: tokenInput });
     if (!token) {
-      return res.status(400).json({ message: 'Invalid or expired token ' });
+      return res.status(400).json({ message: 'Invalid or expired token' });
     }
 
     // Check if the token has already been used
@@ -86,44 +86,44 @@ const markAttendance = async (req, res) => {
     }
 
     const today = new Date();
-    today.setHours(0, 0, 0, 0); // Normalize to start of the day
+    today.setHours(0, 0, 0, 0); // Normalize to the start of the day
 
+    // Check if attendance for today already exists for the student
     const existingAttendance = await Attendance.findOne({
-        student: studentId,
-        'attendance.date': today,
+      student: studentId,
+      'attendance.date': today,
     });
 
     if (existingAttendance) {
-        return res.status(400).json({ message: 'Attendance has already been taken for today.' });
+      return res.status(400).json({ message: 'Attendance has already been taken for today.' });
     }
 
     // Mark the token as used
     token.isUsed = true;
     await token.save();
 
-    // Update attendance for the student, linking to the token
-    const attendanceRecord = await Attendance.findOne({ student: studentId });
+    // Check if attendance record exists for the student
+    let attendanceRecord = await Attendance.findOne({ student: studentId });
 
     if (attendanceRecord) {
-      // Update existing attendance using .create to push attendance
-      await Attendance.create({
-        student: studentId,
-        attendance: [{
-          date: token.date,
-          status: 'Present',
-          token: token._id,  // Add the token reference
-        }],
+      // Push new attendance entry into the existing attendance array
+      attendanceRecord.attendance.push({
+        date: today,
+        token: token._id, // Add reference to the token
       });
+      await attendanceRecord.save(); // Save the updated record
     } else {
-      // If no attendance record exists for the student, create one
-      await Attendance.create({
+      // Create a new attendance record if one doesn't exist
+      attendanceRecord = new Attendance({
         student: studentId,
-        attendance: [{
-          date: token.date,
-          status: 'Present',
-          token: token._id,  // Add the token reference
-        }],
+        attendance: [
+          {
+            date: today,
+            token: token._id, // Add reference to the token
+          },
+        ],
       });
+      await attendanceRecord.save(); // Save the new record
     }
 
     res.status(200).json({
@@ -143,7 +143,7 @@ const markAttendance = async (req, res) => {
 const displayAttendance = async (req, res)=>{
   try {
     const attendance = await Attendance.find()
-    // .populate({path:"student"})
+    .populate({path:"student"})
     res.status(200).json(attendance);
   } catch (error) {
     res.status(500).json({ message: "Error fetching Attendance." });

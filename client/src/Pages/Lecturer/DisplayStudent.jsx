@@ -3,17 +3,19 @@ import { AddStudentModal } from "../../Components/Modal/AddStudentModal";
 import { DeleteModal } from "../../Components/Modal/DeleteModal";
 import { UpdateStudentModal } from "../../Components/Modal/UpdateStudentModal";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faEye, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { Head } from '../../Components/Head';
 import DataTable from 'react-data-table-component';
 import axios from 'axios';
 import { toast } from "react-hot-toast";
+import { ViewModal } from "../../Components/Modal/ViewModal";
 
 export const DisplayStudent = () => {
   // const [isOpen, setIsOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showViewModal, setShowViewModal] = useState(false)
   const [students, setStudents] = useState([]);
   const [filteredStudents, setFilteredStudents] = useState([]);
   const [search, setSearch] = useState("");
@@ -57,12 +59,17 @@ export const DisplayStudent = () => {
     setSelectedStudent(student);
     setShowDeleteModal(true);
   };
+  const handleViewModal = (student) => {
+    setSelectedStudent(student);
+    setShowViewModal(true);
+  };
 
   // Close modals and refresh data
   const handleCloseModal = () => {
     setShowModal(false);
     setShowUpdateModal(false);
     setShowDeleteModal(false);
+    setShowViewModal(false)
     fetchStudents(); // Refresh data after changes
   };
 
@@ -93,6 +100,7 @@ export const DisplayStudent = () => {
       toast.error("Error deleting student. Please try again.");
     }
   };
+
   
 
   // Search and filter students
@@ -125,16 +133,6 @@ export const DisplayStudent = () => {
       selector: (row) => row.email,
       sortable: true,
     },
-    // {
-    //   name: "Present",
-    //   selector: (row) => row.present,
-    //   sortable: true,
-    // },
-    // {
-    //   name: "Absent",
-    //   selector: (row) => row.absent,
-    //   sortable: true,
-    // },
     {
       name: "Action",
       cell: (row) => (
@@ -145,6 +143,9 @@ export const DisplayStudent = () => {
           <button onClick={() => handleDeleteModal(row)}>
             <FontAwesomeIcon icon={faTrashCan} />
           </button>
+          {/* <button onClick={() => handleViewModal(row)}>
+            <FontAwesomeIcon icon={faEye} />
+          </button> */}
         </div>
       ),
     },
@@ -153,7 +154,7 @@ export const DisplayStudent = () => {
   return (
     <div className="bg-customGray py-4 min-h-screen head">
       <div className="px-6 bg-customGray">
-  <div className="body mt-8 ">
+  <div className="mt-8 ">
     <Head
       Click={handleAddBtn}
       Title="Students"
@@ -188,6 +189,12 @@ export const DisplayStudent = () => {
         <DeleteModal
           onClose={handleCloseModal}
           onDelete={(row) => handleDeleteBtn(selectedStudent._id)}
+        />
+      )}
+      {showViewModal && (
+        <ViewModal
+          onClose={handleCloseModal}
+          student={selectedStudent}
         />
       )}
     </div>

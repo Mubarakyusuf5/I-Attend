@@ -16,7 +16,7 @@ export const Attendance = () => {
     const fetchStudents = async () => {
       setLoading(true);
       try {
-        const response = await axios.get("/api/lecturer/todaysAttendance");
+        const response = await axios.get("/api/lecturer/displayAttendance");
         const modifiedStudents = response.data.map((student, index) => ({
           ...student,
           customId: index + 1, // Generate a custom ID for display
@@ -68,9 +68,14 @@ export const Attendance = () => {
         },
         {
           name: "Time's Present",
-          selector: (row) => row.attendance[0].status,
+          selector: (row) => row.attendance.length,
           sortable: true,
         },
+        // {
+        //   name: "Action",
+        //   selector: (row) => row.attendan,
+        //   sortable: true,
+        // },
         
       ];
 

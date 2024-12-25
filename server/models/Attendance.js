@@ -10,11 +10,6 @@ const attendanceSchema = mongoose.Schema(
     attendance: [
       {
         date: { type: Date, required: true },
-        status: {
-          type: String,
-          enum: ["Present", "Absent"],
-          required: true,
-        },
         token: { type: mongoose.Schema.Types.ObjectId, ref: "Token" }
       },
     ],
