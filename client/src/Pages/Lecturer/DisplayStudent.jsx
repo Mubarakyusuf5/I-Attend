@@ -108,7 +108,7 @@ export const DisplayStudent = () => {
     const value = e.target.value.toLowerCase();
     setSearch(value);
     setFilteredStudents(
-      students.filter((student) => student.name.toLowerCase().includes(value))
+      students.filter((student) => student?.fullname.toLowerCase().includes(value))
     );
   };
 

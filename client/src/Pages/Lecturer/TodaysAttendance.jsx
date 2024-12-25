@@ -40,7 +40,7 @@ export const TodaysAttendance = () => {
         const value = e.target.value.toLowerCase();
         setSearch(value);
         setFilteredStudents(
-          students.filter((student) => student.name.toLowerCase().includes(value))
+          students.filter((student) => student?.student?.fullname.toLowerCase().includes(value))
         );
       };
 

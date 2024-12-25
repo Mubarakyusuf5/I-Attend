@@ -36,13 +36,16 @@ export const Attendance = () => {
         fetchStudents();
       }, []);
 
-    const handleSearchFilter = (e) => {
+      const handleSearchFilter = (e) => {
         const value = e.target.value.toLowerCase();
         setSearch(value);
         setFilteredStudents(
-          students.filter((student) => student.name.toLowerCase().includes(value))
+          students.filter(
+            (student) =>
+              student?.student?.fullname?.toLowerCase().includes(value)
+          )
         );
-      };
+      };    
 
       const navigate = useNavigate()
       const nextPage =()=>{
