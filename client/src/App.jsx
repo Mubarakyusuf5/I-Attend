@@ -12,8 +12,8 @@ import { TodaysAttendance } from './Pages/Lecturer/TodaysAttendance'
 import { Attendance } from './Pages/Lecturer/Attendance'
 import { AuthProvider } from './Context/AuthContext'
 import ProtectedRoute from './Components/ProtectedRoute'
-require ("dotenv").config()
-axios.defaults.baseURL = process.env.BACKEND_BASE_URL;
+// require ("dotenv").config()
+axios.defaults.baseURL = "http://localhost:3500";
 axios.defaults.withCredentials = true;
 
 export const App = () => {
